@@ -1,17 +1,17 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-import { BaseEntity } from '../../shared/base.entity';
-import { UserEntity } from '../user/user.entity';
-import { CommentEntity } from '../comment/comment.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { BaseEntity } from "../../shared/base.entity";
+import { UserEntity } from "../user/user.entity";
+import { CommentEntity } from "../comment/comment.entity";
 
-@Entity('Video')
+@Entity("Video")
 export class VideoEntity extends BaseEntity {
-  @Column({ default: '' })
+  @Column({ default: "" })
   title: string;
 
-  @Column({ default: '' })
+  @Column({ default: "" })
   description: string;
 
-  @Column({ default: false, name: 'is_public' })
+  @Column({ default: false, name: "is_public" })
   isPublic: boolean;
 
   @Column({ default: 0 })
@@ -23,14 +23,14 @@ export class VideoEntity extends BaseEntity {
   @Column({ default: 0 })
   duration: number;
 
-  @Column({ default: '' })
+  @Column({ default: "" })
   url: string;
 
-  @Column({ default: '' })
+  @Column({ default: "" })
   thumbnail: string;
 
   @ManyToOne(() => UserEntity, (user) => user.videos)
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn({ name: "user_id" })
   user: UserEntity;
 
   @OneToMany(() => CommentEntity, (comment) => comment.video)

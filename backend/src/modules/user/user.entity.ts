@@ -1,9 +1,9 @@
-import { Column, Entity, OneToMany } from 'typeorm';
-import { BaseEntity } from '../../shared/base.entity';
-import { VideoEntity } from '../video/video.entity';
-import { SubscriptionEntity } from './subscription.entity';
+import { Column, Entity, OneToMany } from "typeorm";
+import { BaseEntity } from "../../shared/base.entity";
+import { VideoEntity } from "../video/video.entity";
+import { SubscriptionEntity } from "./subscription.entity";
 
-@Entity('User')
+@Entity("User")
 export class UserEntity extends BaseEntity {
   @Column({ unique: true })
   email: string;
@@ -11,20 +11,20 @@ export class UserEntity extends BaseEntity {
   @Column({ select: false })
   password: string;
 
-  @Column({ default: '' })
+  @Column({ default: "" })
   name: string;
 
-  @Column({ default: '' })
+  @Column({ default: "" })
   description: string;
 
-  @Column({ default: false, name: 'is_verified' })
+  @Column({ default: false, name: "is_verified" })
   isVerified: boolean;
 
-  @Column({ default: '' })
+  @Column({ default: "" })
   avatar: string;
 
-  @Column({ default: '' })
-  subscribersCount: string;
+  @Column({ default: 0 })
+  subscribersCount: number;
 
   @OneToMany(() => VideoEntity, (video) => video.user)
   videos: VideoEntity[];

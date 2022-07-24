@@ -2,13 +2,13 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from './user.entity';
-import { Repository } from 'typeorm';
-import { SubscriptionEntity } from './subscription.entity';
-import { UpdateUserDto } from './dto/user.dto';
-import { compare, genSalt, hash } from 'bcryptjs';
+} from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { UserEntity } from "./user.entity";
+import { Repository } from "typeorm";
+import { SubscriptionEntity } from "./subscription.entity";
+import { UpdateUserDto } from "./dto/user.dto";
+import { genSalt, hash } from "bcryptjs";
 
 @Injectable()
 export class UserService {
@@ -16,7 +16,7 @@ export class UserService {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(SubscriptionEntity)
-    private readonly subscriptionRepository: Repository<SubscriptionEntity>,
+    private readonly subscriptionRepository: Repository<SubscriptionEntity>
   ) {}
 
   async getUserById(userId: number) {
@@ -31,12 +31,12 @@ export class UserService {
         },
       },
       order: {
-        createdAt: 'DESC',
+        createdAt: "DESC",
       },
     });
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException("User not found");
     }
 
     return user;
@@ -50,7 +50,7 @@ export class UserService {
     });
 
     if (!isAlreadyUsedEmail && userId !== isAlreadyUsedEmail.id) {
-      throw new BadRequestException('Bad email');
+      throw new BadRequestException("Bad email");
     }
 
     if (userData.password) {
@@ -72,12 +72,12 @@ export class UserService {
     };
 
     const isAlreadySubscribed = await this.subscriptionRepository.findOneBy(
-      subscribeData,
+      subscribeData
     );
 
     if (!isAlreadySubscribed) {
       const newSubscription = await this.subscriptionRepository.create(
-        subscribeData,
+        subscribeData
       );
       await this.subscriptionRepository.save(newSubscription);
       return true;
